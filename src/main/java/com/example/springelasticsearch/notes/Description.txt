@@ -1,0 +1,115 @@
+### Elasticsearch Nedir ? ###
+* Büyük verileri (Big Data) doğru bir şekilde saklayıp, analiz edebilmek elasticsearch kullanabiliriz
+* Eğer büyük veri blokları arasında metin arama (full text search) gibi bir ihtiyacımız varsa,
+  bu durumda Elasticsearch bizim için doğru bir tercih olabilir.
+* Elasticsearch ; text üzerinden doğrudan arama yapmak yerine, indexler üzerinden arama yapar ve çok hızlı bir şekilde sonuçlar üretir
+
+### Elasticsearch text üzerinden aramaları nasıl yapar ?  ###
+Elasticsearch e bir veri kaydettiğimiz zaman, veri içerisinde belirledigimiz alanlar Apache Lucene altyapısı kullanılarak indexlenir.
+Elasticsearch bir kelimenin hangi dökümanda(row) geçtiğini veriler kaydedilirken indexler.
+Sonrasında ise kelime aramak istediğimizde tüm veriler üzerinde arama yapmak yerine, daha önce oluşturulan index listesi
+üzerinden sonuçlar hızlıca bulunur
+
+### Elasticsearch Altyapısı ###
+Elasticsearch tamamen Java dilinde yazılmış, dağıtık mimariye sahip, açık kaynak kodlu bir projedir.
+Arama altyapısı, arama motoru konularına ilgi duyanların adını duymuş olabilecekleri Apache Lucene projesini temel almaktadır.
+Lucene projesi daha çok unstructured dediğimiz düz metinlerin indexlenmesi ve aranmasını sağlamaktadır.
+Elasticsearch ise Lucene altyapısının üzerine structured dediğimiz veri yapısı belli dokümanların indexlenmesi ve aranabilmesini sağlamaktadır.
+Temel olarak Elasticsearch üzerinde tutulan her doküman bir JSON nesnesidir ve o dokümanı diğer dokümanlardan ayıran tekil (unique) bir idsi olmalıdır.
+
+### Elasticsearch frameworkunden neler bekleyebilirsiniz? ###
+1- HIZ
+Öncelikle en önemli özelliği olarak elasticsearch frameworkunun çok ama çok hızlı olduğunu söyleyebiliriz.
+Temel olarak bir relational database sisteminin tutabileceği tüm verileri tutabildiği gibi bu verileri bir veritabanı sisteminden
+çok ama çok daha hızlı bir şekilde sorgulamanıza izin vermektedir.
+Bu hızı sağlayabilmek için sayısal değerleri, coğrafi değerleri, tarih ve metinleri tutabilecek özel index yapıları kullanmaktadır.
+
+2- KOLAY KULLANIM
+Elasticsearch sağladığı REST APIleri sayesinde rakiplerine göre oldukça kolay bir şekilde kullanılabilmektedir.
+Üstelik her dil için yazılmış özel kütüphaneleri ile Java, C#, Python, Javascript, PHP, Ruby gibi pek çok programlama dili ile de kullanabilirsiniz.
+
+### ElasticSearch Özellikleri ###
+* Java tabanlıdır.
+* Apache Lucene alt yapılıdır.
+* Açık kaynaktır
+* Veri saklama biçimi ilişkisel değil document-oriented şeklindedir.
+* Type, Fields, Documents, Fields, Indicates, Full-text search, Index gibi kavramlara sahiptir
+* RestfullAPI üzerinden hizmet verdiğinden dolayı tüm programlama dilleriyle kullanılabilir.
+* Veri tipine uygun biçimde otomatik Mapping yapabilir.
+* Elasticsearch’ü monitör edebilen Kibana ve log barındırmak için Logstash araçları ile bilirkte kullanılabilir.
+* Dökümanları JSON olarak indexler.
+* Hızlı kurulum ve kolay konfigürayon vadeder.
+* Elasticsearch’e veri aktarmak oldukça kolaydır. (Veri aktarımı için River gibi yapıları mevcuttur.)
+* HBase, Cassandra, MongoDB gibi NOSQL veritabanlarından da ES’e aktarım yapmayı mümkün kılar.
+
+### Elasticsearch bileşenlerine ve temel prensiplerine değinelim ###
+1- Indice
+Klasik ilişkisel veritabanlarında Database’lerin yerine Elasticsearch’te Indice kavramları kullanılmakta.
+Bir Elasticsearch Cluster’ı birden fazla indices(veritabanları) bulundurabilir.
+
+2- Type
+İlişkisel veritabanlarındaki tablolar için ES “Type” kavramını kullanır. Bir indice, birden fazla type(tablo) barındırabilir.
+
+3- Document
+Elasticsearch’te, ilişkisel veritabanlarındaki Rows (satılar),
+Documents (Dökümanlar) olarak temsil edilirler. Her type, birden fazla document’a sahiptir.
+
+4- Field
+Klasik veritabanlarındaki Column’lar, Elasticsearch’te Field(Alan/kolon) olarak nitelendirilir. Her document bir den fazla fileld’a sahiptir.
+
+5- Full-text search (Tam metin arama)
+Herhangi bir kaynaktan alınan metin belgeleri içinden, herhangi bir anahtar kelimenin aratılarak,
+anahtar kelime ile eşleşen dökümanların bulduğu sonuca hızlı şekilde erişime verilen isimdir.
+
+Örneğin, wikipedia.com‘da bir bilim adamının ismini aratıp bununla ilgili yazılan yazıları okuyacağınızı varsayalım.
+Wikipedia’nın arama çubuğuna Nicola Tesla yazdığınızda onunla ilgili yazıları bulmak için kayıtlı tüm yazılarda arama yapmak yerine,
+önceden indekslenmiş veriler içinden Nikola Tesla’nın adının geçtiği metinlerin olduğu index’e hemen gidip hızlıca
+size sonuç döndürmeyi sağlayan yapıdır.
+
+6- Index
+Elasticsearch’e eklenen her kayıt JSON belgesi olarak yapılandırılır.
+Yani, dökümanlarınızın içindeki her bir kelime(terim) için hangi döküman yada dökümanlarda o kelimenin olduğu bilgisini
+tutan bir endeksleme sistemi vardır.
+Bir nevi veritabanı gibi düşünebilirsin. Veritabanındaki verilerde olan düzen gibi, Elasticsearch’ün indexleri de JSON formatı şeklinde düzenlidir.
+
+7- Mapping
+Verileri indexlerken bu verilerin hangi tipte olduğunu göstermemiz gerekir.
+Yani bir kelimeyi indexlerken o kelimenin hangi veri tipinde(string, integer, boolean) olduğu bilgisinin tanımlandığı işlemdir.
+
+
+8- Cluster
+Tüm verilerinizi bir arada tutan ve tüm indexleme ve arama yeteneklerinin yürütüldüğü birden çok Node’dan oluşan bir küme veya
+node koleksiyonu şeklinde adlandırılabilir.
+Bir küme, varsayılan olarak “elasticsearch” şeklinde benzersiz bir adla tanımlanır Bu isimlendirme isteğe bağlı olarak değiştirilebilir.
+İsimlendirmeler önemlidir çünkü bir node yalnızca bir cluster’ın parçası olabilir. Node, cluster adıyla kümeye katılmak için ayarlanmışsa bu isim tanımlamalarının doğruluğuna ihtiyaç olacaktır.
+
+9- Node
+Tek bir server’a verilen isimdir. Verilerin depolandığı makinelerin her biridir.
+Cluster’ların indexleme ve arama yetenekleri bu node’lar sayesinde gerçekleşir.
+Cluster’lardaki isimlendirme mantığındaki gibi node’lara da başlangıçta benzersiz bir id atanır (Universally Unique IDentifier (UUID)).
+
+Bu isimlendirmeler, nodelar arasındaki bilgi alışverişinin yönetimi için oldukça önemlidir. Eğer istenirse bu isimler de değiştirilebilir.
+Varsayılan olarak her node “elasticsearch” şeklinde isimlendirilen bir cluster’da çalışmak üzere ayarlanmıştır.
+Hangi node’un hangi cluster’a gitmesini isterseniz, o cluster ismine yönlendirmelisiniz.
+
+10- Shard
+Bir seferde milyonlarca dökümanı indexlemek için yeterli donanıma/server kapasitesine sahip olunmayabilir.
+Bir seferde 2TB lık veriyi indexlemek zorunda kaldığınızı varsayalım, bu durumda bu indexlemeyi tek bir node ile yapamak istediğinizde,
+disk kapasitesinin dolması veya aşırı yavaş bir indexleme hızı ile karşı karşıya kalabilirsiniz.
+Bunun önüne geçmek için Shard ve Replika kavramları bulunmakta.
+
+Yapılacak olan bir index, bir node da yeniden shard’lara bölünür. Bu shardları arzunuza göre ayarlayabilmektesiniz.
+Shard’lı mimarinin kullanılmasındaki temel iki amaç;
+* Birden fazla node üzerinde işlemleri dağıtmanızı ve paralelleştirmeyi sağlar. Böylece performans artar.
+* İçerik hacmini yatay olarak bölme ve ölçeklendirmeye olanak tanır.
+
+11- Replica
+Shard’ın devre dışı kalması ihtimaline karşı index shard’larının bir veya birden çok kopyasının oluşturulabilmesini sağlayan replica-shard yapısı bulunur.
+Bir shard’a ait replica, aynı node’da barındırılmamalıdır. Bir node çöktüğünde o node’daki shard(lar)’ın yedeklerinin diğer nodelarda bulunması veri kaybını önlemek için şarttır.
+
+
+Kaynak dokuman olarak = https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#elasticsearch.repositories
+Bu kaynakta 8.bölümde Elasticsearch Repositories Json formatında sorgu ları detayını okuyabilirsiniz
+
+
+
